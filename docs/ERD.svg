@@ -1,0 +1,126 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1120" viewBox="0 0 1600 1120">
+  <style>
+    .bg { fill: #f1f3f5; }
+    .title { font: 700 32px Arial, sans-serif; fill: #0b1f3a; }
+    .subtitle { font: 16px Arial, sans-serif; fill: #475569; }
+    .entity { fill: #fff; stroke: #0b1f3a; stroke-width: 2; rx: 8; }
+    .entity-head { fill: #0b1f3a; }
+    .entity-name { font: 700 17px Arial, sans-serif; fill: #fff; }
+    .field { font: 14px Arial, sans-serif; fill: #111827; }
+    .relation { stroke: #f97316; stroke-width: 2.5; fill: none; }
+    .relation-label { font: 13px Arial, sans-serif; fill: #c2410c; }
+    .key { font-weight: 700; fill: #2563a6; }
+  </style>
+  <rect class="bg" width="1600" height="1120"/>
+  <text class="title" x="60" y="55">EnduroTrack — Draft Entity-Relationship Diagram</text>
+  <text class="subtitle" x="60" y="84">Milestone 1 database planning · runners, cyclists, coaches and competitions</text>
+
+  <defs>
+    <marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 z" fill="#f97316"/>
+    </marker>
+  </defs>
+
+  <!-- Relationships -->
+  <path class="relation" marker-end="url(#arrow)" d="M220 250 L220 320"/>
+  <text class="relation-label" x="235" y="288">assigns</text>
+  <path class="relation" marker-end="url(#arrow)" d="M390 470 L390 545"/>
+  <text class="relation-label" x="405" y="510">has</text>
+  <path class="relation" marker-end="url(#arrow)" d="M520 385 L650 385"/>
+  <text class="relation-label" x="545" y="375">creates</text>
+  <path class="relation" marker-end="url(#arrow)" d="M790 385 L950 385"/>
+  <text class="relation-label" x="830" y="375">used by</text>
+  <path class="relation" marker-end="url(#arrow)" d="M520 430 L650 700"/>
+  <text class="relation-label" x="535" y="575">records</text>
+  <path class="relation" marker-end="url(#arrow)" d="M790 700 L950 700"/>
+  <text class="relation-label" x="830" y="690">uses</text>
+  <path class="relation" marker-end="url(#arrow)" d="M790 750 L950 850"/>
+  <text class="relation-label" x="825" y="815">receives</text>
+  <path class="relation" marker-end="url(#arrow)" d="M1070 385 L1260 385"/>
+  <text class="relation-label" x="1120" y="375">creates</text>
+  <path class="relation" marker-end="url(#arrow)" d="M1070 430 L1260 700"/>
+  <text class="relation-label" x="1100" y="565">registers</text>
+  <path class="relation" marker-end="url(#arrow)" d="M1410 470 L1410 700"/>
+  <text class="relation-label" x="1425" y="590">accepts</text>
+  <path class="relation" marker-end="url(#arrow)" d="M520 480 L650 930"/>
+  <text class="relation-label" x="545" y="720">writes</text>
+  <path class="relation" marker-end="url(#arrow)" d="M790 930 L950 930"/>
+  <text class="relation-label" x="830" y="920">receives</text>
+
+  <!-- Entities -->
+  <g transform="translate(80 130)">
+    <rect class="entity" width="280" height="120"/>
+    <rect class="entity-head" width="280" height="38" rx="8"/>
+    <text class="entity-name" x="16" y="25">ROLES</text>
+    <text class="field key" x="16" y="62">PK  id</text>
+    <text class="field" x="16" y="86">name</text>
+  </g>
+  <g transform="translate(80 320)">
+    <rect class="entity" width="440" height="160"/>
+    <rect class="entity-head" width="440" height="38" rx="8"/>
+    <text class="entity-name" x="16" y="25">USERS</text>
+    <text class="field key" x="16" y="62">PK  id</text>
+    <text class="field key" x="16" y="86">FK  role_id</text>
+    <text class="field" x="16" y="110">first_name · last_name · email</text>
+    <text class="field" x="16" y="134">password_hash · created_at</text>
+  </g>
+  <g transform="translate(250 545)">
+    <rect class="entity" width="280" height="120"/>
+    <rect class="entity-head" width="280" height="38" rx="8"/>
+    <text class="entity-name" x="16" y="25">ATHLETE_PROFILES</text>
+    <text class="field key" x="16" y="62">PK  id</text>
+    <text class="field key" x="16" y="86">FK  user_id</text>
+    <text class="field" x="16" y="110">discipline · season_goal</text>
+  </g>
+  <g transform="translate(650 320)">
+    <rect class="entity" width="280" height="130"/>
+    <rect class="entity-head" width="280" height="38" rx="8"/>
+    <text class="entity-name" x="16" y="25">ROUTES</text>
+    <text class="field key" x="16" y="62">PK  id</text>
+    <text class="field key" x="16" y="86">FK  created_by</text>
+    <text class="field" x="16" y="110">name · discipline · distance_km</text>
+  </g>
+  <g transform="translate(650 635)">
+    <rect class="entity" width="280" height="150"/>
+    <rect class="entity-head" width="280" height="38" rx="8"/>
+    <text class="entity-name" x="16" y="25">TRAINING_SESSIONS</text>
+    <text class="field key" x="16" y="62">PK  id</text>
+    <text class="field key" x="16" y="86">FK  athlete_id · route_id</text>
+    <text class="field" x="16" y="110">session_date · distance_km</text>
+    <text class="field" x="16" y="134">duration_minutes · notes</text>
+  </g>
+  <g transform="translate(950 635)">
+    <rect class="entity" width="280" height="150"/>
+    <rect class="entity-head" width="280" height="38" rx="8"/>
+    <text class="entity-name" x="16" y="25">TRAINING_PLANS</text>
+    <text class="field key" x="16" y="62">PK  id</text>
+    <text class="field key" x="16" y="86">FK  coach_id · athlete_id</text>
+    <text class="field key" x="16" y="110">FK  route_id</text>
+    <text class="field" x="16" y="134">title · planned_date · status</text>
+  </g>
+  <g transform="translate(1260 320)">
+    <rect class="entity" width="280" height="150"/>
+    <rect class="entity-head" width="280" height="38" rx="8"/>
+    <text class="entity-name" x="16" y="25">COMPETITIONS</text>
+    <text class="field key" x="16" y="62">PK  id</text>
+    <text class="field key" x="16" y="86">FK  created_by</text>
+    <text class="field" x="16" y="110">name · discipline · event_date</text>
+    <text class="field" x="16" y="134">location · distance_km</text>
+  </g>
+  <g transform="translate(1260 700)">
+    <rect class="entity" width="280" height="120"/>
+    <rect class="entity-head" width="280" height="38" rx="8"/>
+    <text class="entity-name" x="16" y="25">REGISTRATIONS</text>
+    <text class="field key" x="16" y="62">PK  id</text>
+    <text class="field key" x="16" y="86">FK  competition_id · athlete_id</text>
+    <text class="field" x="16" y="110">registered_at</text>
+  </g>
+  <g transform="translate(650 865)">
+    <rect class="entity" width="280" height="120"/>
+    <rect class="entity-head" width="280" height="38" rx="8"/>
+    <text class="entity-name" x="16" y="25">COACH_RECOMMENDATIONS</text>
+    <text class="field key" x="16" y="62">PK  id</text>
+    <text class="field key" x="16" y="86">FK  coach_id · athlete_id</text>
+    <text class="field" x="16" y="110">title · content · created_at</text>
+  </g>
+</svg>

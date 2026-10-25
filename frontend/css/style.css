@@ -1,0 +1,39 @@
+:root {
+  --et-black: #111827;
+  --et-dark-blue: #0b1f3a;
+  --et-blue: #2563a6;
+  --et-light-blue: #dbeafe;
+  --et-orange: #f97316;
+  --et-light-gray: #f1f3f5;
+  --et-muted: #64748b;
+}
+
+body { background: var(--et-light-gray); color: var(--et-black); font-family: Inter, system-ui, sans-serif; }
+.navbar { background: var(--et-dark-blue); }
+.navbar-brand { font-weight: 800; letter-spacing: -.04em; }
+.brand-mark { color: var(--et-orange); }
+.hero { background: linear-gradient(125deg, var(--et-dark-blue), #1d4f85); color: white; border-radius: 1.5rem; }
+.hero .display-5 { font-weight: 800; letter-spacing: -.05em; }
+.card { border: 0; border-radius: 1rem; box-shadow: 0 8px 24px rgba(15, 23, 42, .08); }
+.stat-card { min-height: 140px; }
+.stat-icon { width: 42px; height: 42px; display: grid; place-items: center; border-radius: 12px; background: var(--et-light-blue); color: var(--et-blue); }
+.btn-primary { --bs-btn-bg: var(--et-blue); --bs-btn-border-color: var(--et-blue); --bs-btn-hover-bg: var(--et-dark-blue); --bs-btn-hover-border-color: var(--et-dark-blue); }
+.btn-accent { background: var(--et-orange); color: white; font-weight: 700; }
+.btn-accent:hover { background: #ea580c; color: white; }
+.sidebar-link { color: #cbd5e1; text-decoration: none; border-radius: .6rem; display: block; padding: .65rem .8rem; }
+.sidebar-link:hover, .sidebar-link.active { background: rgba(255,255,255,.12); color: white; }
+.sidebar { min-height: calc(100vh - 56px); background: var(--et-dark-blue); }
+.table > :not(caption) > * > * { padding: 1rem .75rem; }
+.badge-running { background: var(--et-light-blue); color: var(--et-dark-blue); }
+.badge-cycling { background: #ffedd5; color: #c2410c; }
+.text-success { color: var(--et-blue) !important; }
+.text-warning { color: var(--et-orange) !important; }
+.weather-card { background: linear-gradient(135deg, var(--et-light-blue), #f8fbff); }
+.auth-page { min-height: 100vh; background: linear-gradient(140deg, var(--et-dark-blue) 50%, var(--et-light-gray) 50%); }
+.auth-card { max-width: 440px; margin: auto; }
+.route-card { border-left: 4px solid var(--et-orange); }
+@media (max-width: 767px) {
+  .sidebar { min-height: auto; }
+  .hero { border-radius: 0 0 1.5rem 1.5rem; }
+  .display-5 { font-size: 2.2rem; }
+}
