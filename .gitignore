@@ -1,0 +1,8 @@
+/backend/config/config.php
+/backend/logs/*.log
+/backend/vendor/
+/.env
+/.idea/
+/.vscode/
+*.sql.bak
+
