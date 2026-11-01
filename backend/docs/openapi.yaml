@@ -1,0 +1,8 @@
+openapi: 3.0.3
+info:
+  title: EnduroTrack REST API
+  version: 0.1.0
+  description: Planned API documentation. Endpoints will be added with the FlightPHP backend milestone.
+servers:
+  - url: http://localhost/labs-web/backend
+paths: {}

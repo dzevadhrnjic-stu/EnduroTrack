@@ -1,0 +1,41 @@
+<section class="auth-page d-flex align-items-center p-3">
+  <div class="auth-card w-100">
+    <div class="text-center text-white mb-4">
+      <h1 class="h2"><span class="brand-mark">●</span> EnduroTrack</h1>
+      <p class="text-white-50">Train smarter. Track progress.</p>
+    </div>
+    <div class="card p-4 p-md-5">
+      <h2 class="h4">Create your account</h2>
+      <p class="text-secondary">Start tracking your running and cycling progress.</p>
+      <form data-auth-form="register">
+        <div class="row g-2">
+          <div class="col-6">
+            <label class="form-label mt-3" for="register-first-name">First name</label>
+            <input id="register-first-name" class="form-control" placeholder="Alex" required>
+          </div>
+          <div class="col-6">
+            <label class="form-label mt-3" for="register-last-name">Last name</label>
+            <input id="register-last-name" class="form-control" placeholder="Morgan" required>
+          </div>
+        </div>
+        <label class="form-label mt-3" for="register-email">Email</label>
+        <input id="register-email" class="form-control mb-3" type="email"
+               placeholder="you@example.com" required>
+        <label class="form-label" for="register-password">Password</label>
+        <input id="register-password" class="form-control mb-4" type="password"
+               placeholder="Password" required>
+        <label class="form-label" for="register-discipline">Main discipline</label>
+        <select id="register-discipline" class="form-select mb-4">
+          <option>Running and cycling</option>
+          <option>Running</option>
+          <option>Cycling</option>
+        </select>
+        <button class="btn btn-primary w-100" type="submit">Create account</button>
+      </form>
+      <p class="text-center text-secondary small mt-4 mb-0">
+        Already have an account?
+        <a href="#" data-page="login">Sign in</a>
+      </p>
+    </div>
+  </div>
+</section>
