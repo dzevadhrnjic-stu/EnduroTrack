@@ -29,3 +29,26 @@
 All generated files were reviewed and adjusted to keep frontend and backend
 concerns separate and to make the Milestone 1 deliverables explicit.
 
+## Milestone 2 — Database and DAO layer
+
+### Tools used
+
+- Copilot SDK in VS Code was used to inspect the project requirements and
+  implement the PDO connection, reusable base DAO, entity DAO classes and
+  sample database data.
+- No external AI tools were used.
+
+### Important prompts
+
+- “Read the project requirements and implement Milestone 2.”
+- “Implement a reusable PDO DAO layer with CRUD operations using prepared
+  statements for the existing EnduroTrack entities.”
+
+### AI mistakes and corrections
+
+1. The first implementation attempt produced a malformed non-ASCII route name
+   in the SQL sample data. It was noticed during review and corrected to the
+   project’s ASCII naming convention.
+2. The existing schema had only role seed data, so it did not satisfy the
+   sample-data requirement. Sample records were added for users, profiles,
+   routes, sessions, plans, competitions, registrations and recommendations.
