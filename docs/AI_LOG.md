@@ -52,3 +52,29 @@ concerns separate and to make the Milestone 1 deliverables explicit.
 2. The existing schema had only role seed data, so it did not satisfy the
    sample-data requirement. Sample records were added for users, profiles,
    routes, sessions, plans, competitions, registrations and recommendations.
+
+## Milestone 3 — Services, routes, OpenAPI and external API
+
+### Tools used
+
+- Copilot SDK in VS Code was used to implement the FlightPHP bootstrap,
+  entity business services, JSON CRUD routes, Swagger UI and Open-Meteo
+  weather service.
+- Composer was used to install the FlightPHP core dependency.
+- No external AI tools were used.
+
+### AI mistakes and corrections
+
+1. The first HTTP smoke test exposed the raw PDO connection exception as an
+   HTML fatal error when MySQL was unavailable. A bootstrap guard was added so
+   the API returns a JSON `500` message without stack traces.
+2. The first service validation version did not validate string, email and
+   generic numeric fields consistently. Explicit validation rules were added
+   to the shared service base before entity services were tested.
+
+The route layer delegates to services, and services delegate to DAOs, keeping
+database access out of FlightPHP route definitions.
+
+Password handling was also corrected so the users API accepts a plain
+`password` field, validates it and creates or replaces `password_hash` with
+PHP `password_hash()`. Password hashes are excluded from GET responses.
