@@ -1,8 +1,461 @@
 openapi: 3.0.3
 info:
   title: EnduroTrack REST API
-  version: 0.1.0
-  description: Planned API documentation. Endpoints will be added with the FlightPHP backend milestone.
+  version: 0.2.0
+  description: CRUD API for EnduroTrack training data and Open-Meteo weather forecasts.
 servers:
-  - url: http://localhost/labs-web/backend
-paths: {}
+  - url: http://localhost/EnduroTrack/backend
+tags:
+  - name: Resources
+  - name: Weather
+paths:
+  /api:
+    get:
+      tags: [Resources]
+      summary: API health and version
+      responses:
+        '200':
+          description: API information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiInfo'
+  /api/{resource}:
+    parameters:
+      - $ref: '#/components/parameters/Resource'
+    get:
+      tags: [Resources]
+      summary: List records for a resource
+      description: >
+        Returns all records for the selected resource. Supported resources are
+        roles, users, athlete-profiles, routes, training-sessions,
+        training-plans, competitions, registrations and coach-recommendations.
+        Example request: GET /api/routes.
+      responses:
+        '200':
+          description: Resource records
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DataList'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    post:
+      tags: [Resources]
+      summary: Create a record for a resource
+      description: >
+        Creates a new record after service-layer validation. The request body
+        depends on the selected resource. Example request: POST /api/routes.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
+            examples:
+              role:
+                summary: Role
+                value:
+                  name: test-role
+              user:
+                summary: User
+                value:
+                  role_id: 3
+                  first_name: Test
+                  last_name: Athlete
+                  email: test-athlete@endurotrack.test
+                  password: TestPassword123
+              athlete-profile:
+                summary: Athlete profile
+                value:
+                  user_id: 3
+                  discipline: both
+                  experience_level: intermediate
+                  season_goal: Complete a spring half marathon
+              route:
+                summary: Route
+                value:
+                  created_by: 3
+                  name: Milestone 3 test route
+                  discipline: running
+                  distance_km: 5.5
+                  elevation_gain_m: 30
+                  city: Sarajevo
+                  latitude: 43.8563
+                  longitude: 18.4131
+              training-session:
+                summary: Training session
+                value:
+                  athlete_id: 3
+                  route_id: 1
+                  discipline: running
+                  session_date: "2026-11-15"
+                  distance_km: 5
+                  duration_minutes: 30
+                  average_speed: 10
+                  notes: Easy training session
+              training-plan:
+                summary: Training plan
+                value:
+                  coach_id: 2
+                  athlete_id: 3
+                  route_id: 1
+                  title: Milestone 3 test plan
+                  planned_date: "2026-11-16"
+                  target_distance_km: 8
+                  status: planned
+              competition:
+                summary: Competition
+                value:
+                  created_by: 1
+                  name: Milestone 3 Test Competition
+                  discipline: running
+                  event_date: "2026-12-01"
+                  location: Sarajevo, BiH
+                  distance_km: 10
+                  registration_deadline: "2026-11-25"
+              registration:
+                summary: Competition registration
+                value:
+                  competition_id: 1
+                  athlete_id: 3
+              coach-recommendation:
+                summary: Coach recommendation
+                value:
+                  coach_id: 2
+                  athlete_id: 3
+                  title: Milestone 3 test recommendation
+                  content: Keep the effort controlled.
+      responses:
+        '201':
+          description: Created record
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DataItem'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /api/{resource}/{id}:
+    parameters:
+      - $ref: '#/components/parameters/Resource'
+      - $ref: '#/components/parameters/Id'
+    get:
+      tags: [Resources]
+      summary: Get one resource record by ID
+      description: >
+        Returns one record identified by its numeric ID. Example request:
+        GET /api/routes/1.
+      responses:
+        '200':
+          description: Resource record
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DataItem'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      tags: [Resources]
+      summary: Replace a resource record
+      description: >
+        Replaces the writable fields of one record after validation. Example
+        request: PUT /api/routes/1.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
+            examples:
+              role:
+                summary: Update role
+                value:
+                  name: updated-role
+              user:
+                summary: Update user
+                value:
+                  role_id: 3
+                  first_name: Updated
+                  last_name: Athlete
+                  email: updated-athlete@endurotrack.test
+                  password: UpdatedPassword123
+              athlete-profile:
+                summary: Update athlete profile
+                value:
+                  user_id: 3
+                  discipline: running
+                  experience_level: advanced
+                  season_goal: Improve race performance
+              route:
+                summary: Update route
+                value:
+                  created_by: 3
+                  name: Updated Milestone 3 route
+                  discipline: running
+                  distance_km: 6.25
+                  elevation_gain_m: 35
+                  city: Sarajevo
+                  latitude: 43.8563
+                  longitude: 18.4131
+              training-session:
+                summary: Update training session
+                value:
+                  athlete_id: 3
+                  route_id: 1
+                  discipline: running
+                  session_date: "2026-11-15"
+                  distance_km: 6
+                  duration_minutes: 35
+                  average_speed: 10.5
+                  notes: Updated training session
+              training-plan:
+                summary: Update training plan
+                value:
+                  coach_id: 2
+                  athlete_id: 3
+                  route_id: 1
+                  title: Updated Milestone 3 plan
+                  planned_date: "2026-11-16"
+                  target_distance_km: 9
+                  status: completed
+              competition:
+                summary: Update competition
+                value:
+                  created_by: 1
+                  name: Updated Milestone 3 Competition
+                  discipline: cycling
+                  event_date: "2026-12-05"
+                  location: Mostar, BiH
+                  distance_km: 50
+                  registration_deadline: "2026-11-28"
+              registration:
+                summary: Update registration
+                value:
+                  competition_id: 1
+                  athlete_id: 3
+              coach-recommendation:
+                summary: Update coach recommendation
+                value:
+                  coach_id: 2
+                  athlete_id: 3
+                  title: Updated recommendation
+                  content: Increase effort gradually.
+      responses:
+        '200':
+          description: Updated record
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DataItem'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    patch:
+      tags: [Resources]
+      summary: Partially update a resource record
+      description: >
+        Updates only the supplied writable fields. Example request:
+        PATCH /api/routes/1.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
+            examples:
+              role:
+                summary: Rename role
+                value:
+                  name: patched-role
+              user:
+                summary: Patch user fields
+                value:
+                  first_name: Patched
+                  email: patched-athlete@endurotrack.test
+                  password: PatchedPassword123
+              athlete-profile:
+                summary: Patch athlete profile
+                value:
+                  experience_level: expert
+                  season_goal: Complete two competitions
+              route:
+                summary: Patch route
+                value:
+                  name: Patched Milestone 3 route
+                  distance_km: 7
+                  elevation_gain_m: 40
+              training-session:
+                summary: Patch training session
+                value:
+                  distance_km: 7.5
+                  duration_minutes: 40
+                  notes: Patched training session
+              training-plan:
+                summary: Patch training plan
+                value:
+                  status: completed
+                  target_distance_km: 10
+              competition:
+                summary: Patch competition
+                value:
+                  location: Trebinje, BiH
+                  distance_km: 21
+              registration:
+                summary: Patch registration
+                value:
+                  athlete_id: 3
+              coach-recommendation:
+                summary: Patch coach recommendation
+                value:
+                  title: Patched recommendation
+                  content: Keep the next session controlled.
+      responses:
+        '200':
+          description: Updated record
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DataItem'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      tags: [Resources]
+      summary: Delete a resource record
+      description: >
+        Deletes one record by numeric ID. Example request:
+        DELETE /api/routes/1.
+      responses:
+        '200':
+          description: Deletion confirmation
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /api/weather:
+    get:
+      tags: [Weather]
+      summary: Get an outdoor training forecast
+      description: >
+        Calls Open-Meteo with route coordinates and a training date, then
+        returns forecast values and a user-friendly outdoor-training
+        recommendation.
+      parameters:
+        - name: latitude
+          in: query
+          required: true
+          schema:
+            type: number
+            minimum: -90
+            maximum: 90
+        - name: longitude
+          in: query
+          required: true
+          schema:
+            type: number
+            minimum: -180
+            maximum: 180
+        - name: date
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+      responses:
+        '200':
+          description: Weather forecast and training recommendation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WeatherResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/ServerError'
+components:
+  parameters:
+    Resource:
+      name: resource
+      in: path
+      required: true
+      description: Each supported value exposes GET collection, GET item, POST, PUT, PATCH and DELETE operations.
+      schema:
+        type: string
+        example: routes
+        enum:
+          - roles
+          - users
+          - athlete-profiles
+          - routes
+          - training-sessions
+          - training-plans
+          - competitions
+          - registrations
+          - coach-recommendations
+    Id:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: integer
+        minimum: 1
+  schemas:
+    ApiInfo:
+      type: object
+      properties:
+        name: {type: string}
+        version: {type: string}
+    DataList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
+    DataItem:
+      type: object
+      properties:
+        data:
+          type: object
+          additionalProperties: true
+    WeatherResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          required: [date, temperature_max_c, temperature_min_c, recommendation]
+          properties:
+            date: {type: string, format: date}
+            latitude: {type: number}
+            longitude: {type: number}
+            temperature_max_c: {type: number, nullable: true}
+            temperature_min_c: {type: number, nullable: true}
+            precipitation_probability_percent: {type: number}
+            wind_speed_max_kmh: {type: number}
+            recommendation: {type: string}
+    Error:
+      type: object
+      properties:
+        error: {type: string}
+  responses:
+    BadRequest:
+      description: Invalid request
+      content:
+        application/json:
+          schema: {$ref: '#/components/schemas/Error'}
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema: {$ref: '#/components/schemas/Error'}
+    ServerError:
+      description: Internal or external service failure
+      content:
+        application/json:
+          schema: {$ref: '#/components/schemas/Error'}

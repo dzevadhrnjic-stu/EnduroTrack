@@ -1,6 +1,7 @@
 /backend/config/config.php
 /backend/logs/*.log
 /backend/vendor/
+/vendor/
 /.env
 /.idea/
 /.vscode/
